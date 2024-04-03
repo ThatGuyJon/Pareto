@@ -2,9 +2,9 @@ import streamlit as st
 
 # Define a dictionary of business names and their corresponding webpages
 business_websites = {
-    "Laval Tool": {
-        "workstation Plant 1": "https://www.businessa-workstation.com",
-        "server": "https://api.paretosupport.com/clients/42fcf95e-37b3-40ae-81b4-8d75fbcae718/deploy/"
+    "Business A": {
+        "workstation": "https://www.businessa-workstation.com",
+        "server": "https://www.businessa-server.com"
     },
     "Business B": {
         "workstation": "https://www.businessb-workstation.com",
@@ -34,4 +34,4 @@ selected_option = st.selectbox("Select workstation or server:", list(options.key
 # Button to open the selected webpage
 if st.button("Open Webpage"):
     selected_url = business_websites[selected_business][selected_option]
-    st.write(f"Opening {selected_business} {selected_option} webpage: {selected_url}")
+    st.write(f"Opening {selected_business} {selected_option} webpage: {selected_url}", unsafe_allow_html=True)
