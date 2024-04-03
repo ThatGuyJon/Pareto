@@ -19,7 +19,7 @@ business_websites = {
 
 # Define a dictionary of workstation and server options
 options = {
-    "Workstation": "workstation",
+    "Workstation": "https://www.businessc-workstation.com",
     "Server": "server"
 }
 
