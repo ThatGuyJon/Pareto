@@ -34,4 +34,4 @@ selected_option = st.selectbox("Select workstation or server:", list(options.key
 # Button to open the selected webpage
 if st.button("Open Webpage"):
     selected_url = business_websites[selected_business][selected_option]
-    st.write(f"Opening {selected_business} {selected_option} webpage: {selected_url}", unsafe_allow_html=True)
+st.link_button(f"Open {selected_business} {selected_option} webpage", selected_url)
