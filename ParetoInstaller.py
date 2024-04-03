@@ -1,19 +1,18 @@
 import streamlit as st
-import webbrowser
 
 # Define a dictionary of business names and their corresponding webpages
 business_websites = {
     "Business A": {
-        "workstation": "https://www.businessa-workstation.com",
-        "server": "https://www.businessa-server.com"
+        "workstation": "[Business A Workstation](https://www.businessa-workstation.com)",
+        "server": "[Business A Server](https://www.businessa-server.com)"
     },
     "Business B": {
-        "workstation": "https://www.businessb-workstation.com",
-        "server": "https://www.businessb-server.com"
+        "workstation": "[Business B Workstation](https://www.businessb-workstation.com)",
+        "server": "[Business B Server](https://www.businessb-server.com)"
     },
     "Business C": {
-        "workstation": "https://www.businessc-workstation.com",
-        "server": "https://www.businessc-server.com"
+        "workstation": "[Business C Workstation](https://www.businessc-workstation.com)",
+        "server": "[Business C Server](https://www.businessc-server.com)"
     }
 }
 
@@ -32,6 +31,7 @@ selected_business = st.selectbox("Select a business name:", list(business_websit
 # Dropdown for selecting workstation or server
 selected_option = st.selectbox("Select workstation or server:", list(options.keys()))
 
-# Link button to open the selected webpage
-selected_url = business_websites[selected_business][selected_option]
-st.link_button("Go to gallery",  [selected_url])
+# Button to open the selected webpage
+if st.button("Open Webpage"):
+    selected_url = business_websites[selected_business][selected_option]
+    st.write(f"Opening {selected_business} {selected_option} webpage: {selected_url}", unsafe_allow_html=True)
