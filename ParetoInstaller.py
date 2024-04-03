@@ -3,7 +3,7 @@ import streamlit as st
 # Define a dictionary of business names and their corresponding webpages
 business_websites = {
     "Business A": {
-        "workstation": "Business A Workstation",
+        "workstation": "google.com",
         "server": "Business A Server"
     },
     "Business B": {
