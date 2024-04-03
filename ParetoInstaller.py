@@ -23,7 +23,7 @@ options = {
 }
 
 # Create a Streamlit app
-st.title("Business Webpage Selector")
+st.title("Pareto Client Installer")
 
 # Dropdown for selecting a business name
 selected_business = st.selectbox("Select a business name:", list(business_websites.keys()))
