@@ -25,7 +25,7 @@ def create_styled_button(url):
         # You can customize the button style using CSS
         button_style = """
             <style>
-                .download-button {
+                .open-button {
                     background-color: #f0f2f6;
                     border: none;
                     color: white;
@@ -35,11 +35,10 @@ def create_styled_button(url):
                     display: inline-block;
                     font-size: 16px;
                     border-radius: 5px;
-                    all: unset;
                 }
             </style>
         """
-        href = f'<a href="{url}" class="download-button">Download {filename}</a>'
+        href = f'<a href="{url}" target="_blank" class="open-button">Open {business_name}</a>'
         return button_style + href
 
 # Get the selected URL based on the chosen business and option
@@ -47,6 +46,6 @@ selected_url = business_options_dict.get(selected_business, {}).get(selected_opt
 
 # Display the link to the selected webpage
 if selected_url:
-    st.markdown(create_styled_button(selected_url,), unsafe_allow_html=True)
+    st.markdown(create_styled_button(selected_url, selected_business), unsafe_allow_html=True)
 else:
     st.warning("Please select a business and an option from the dropdowns.")
