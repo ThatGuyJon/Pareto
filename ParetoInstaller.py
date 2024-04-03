@@ -31,15 +31,7 @@ selected_business = st.selectbox("Select a business name:", list(business_websit
 # Dropdown for selecting workstation or server
 selected_option = st.selectbox("Select workstation or server:", list(options.keys()))
 
-def open_page(url):
-    open_script= """
-        <script type="text/javascript">
-            window.open('%s', '_blank').focus();
-        </script>
-    """ % (url)
-    html(open_script)
 
 # Button to open the selected webpage
-st.button('Open link', on_click=open_page, args=('https://streamlit.io',))
 st.write("check out this [link](%s)" % url)
 st.markdown("check out this [link](%s)" % url)
