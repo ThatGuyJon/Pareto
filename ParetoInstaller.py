@@ -33,6 +33,4 @@ selected_business = st.selectbox("Select a business name:", list(business_websit
 selected_option = st.selectbox("Select workstation or server:", list(options.keys()))
 
 # Link button to open the selected webpage
-if st.link_button("Open Webpage"):
-    selected_url = business_websites[selected_business][selected_option]
-    webbrowser.open(selected_url)
+st.link_button("Go to gallery", "https://streamlit.io/gallery")
