@@ -33,4 +33,4 @@ selected_option = st.selectbox("Select workstation or server:", list(options.key
 
 # Button to open the selected webpage
 selected_url = business_websites[selected_business][options[selected_option]]
-st.link_button(f"Open {selected_business} {selected_option} webpage", selected_url)
+st.link_button(f"Download {selected_business} {selected_option}", selected_url)
