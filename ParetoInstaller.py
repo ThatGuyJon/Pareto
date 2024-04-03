@@ -41,3 +41,5 @@ def open_page(url):
 
 # Button to open the selected webpage
 st.button('Open link', on_click=open_page, args=('https://streamlit.io',))
+st.write("check out this [link](%s)" % url)
+st.markdown("check out this [link](%s)" % url)
