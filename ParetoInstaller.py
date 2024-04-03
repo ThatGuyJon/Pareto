@@ -19,7 +19,7 @@ business_websites = {
 
 # Define a dictionary of workstation and server options
 options = {
-    "Workstation": "https://www.businessc-workstation.com",
+    "Workstation": "workstation",
     "Server": "server"
 }
 
@@ -33,6 +33,5 @@ selected_business = st.selectbox("Select a business name:", list(business_websit
 selected_option = st.selectbox("Select workstation or server:", list(options.keys()))
 
 # Button to open the selected webpage
-if st.button("Open Webpage"):
-    selected_url = business_websites[selected_business][selected_option]
-    webbrowser.open(selected_url)
+selected_url = business_websites[selected_business][selected_option]
+st.link_button("Open Webpage", selected_url)
