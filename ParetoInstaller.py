@@ -40,6 +40,4 @@ def open_page(url):
     html(open_script)
 
 # Button to open the selected webpage
-if st.button("Open Webpage", on_click=open_page, args=({selected_url},)):
-    selected_url = business_websites[selected_business][selected_option]
-    st.write(f"Opening {selected_business} {selected_option} webpage: {selected_url}", unsafe_allow_html=True)
+st.button('Open link', on_click=open_page, args=('https://streamlit.io',))
