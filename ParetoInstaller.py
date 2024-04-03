@@ -26,7 +26,7 @@ def create_styled_button(url, filename):
         button_style = """
             <style>
                 .download-button {
-                    background-color: #4CAF50;
+                    background-color: #f0f2f6;
                     border: none;
                     color: white;
                     padding: 10px 20px;
@@ -35,6 +35,7 @@ def create_styled_button(url, filename):
                     display: inline-block;
                     font-size: 16px;
                     border-radius: 5px;
+                    all: unset;
                 }
             </style>
         """
