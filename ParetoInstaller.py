@@ -20,7 +20,7 @@ selected_business = st.selectbox("Select a business", list(business_options_dict
 selected_option = st.selectbox("Select an option", ["Workstation", "Server"])
 
 # Define a function to create the styled download button
-def create_styled_button(url, filename):
+def create_styled_button(url):
     with st.spinner("Generating download link..."):
         # You can customize the button style using CSS
         button_style = """
@@ -39,7 +39,7 @@ def create_styled_button(url, filename):
                 }
             </style>
         """
-        href = f'<a href="{url}" download="{filename}" class="download-button">Download {filename}</a>'
+        href = f'<a href="{url}" class="download-button">Download {filename}</a>'
         return button_style + href
 
 # Get the selected URL based on the chosen business and option
@@ -47,6 +47,6 @@ selected_url = business_options_dict.get(selected_business, {}).get(selected_opt
 
 # Display the link to the selected webpage
 if selected_url:
-    st.markdown(create_styled_button(selected_url, f"{selected_business}_{selected_option}.exe"), unsafe_allow_html=True)
+    st.markdown(create_styled_button(selected_url,), unsafe_allow_html=True)
 else:
     st.warning("Please select a business and an option from the dropdowns.")
