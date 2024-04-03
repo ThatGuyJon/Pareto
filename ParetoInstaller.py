@@ -2,9 +2,9 @@ import streamlit as st
 
 # Define a dictionary of business names and their corresponding webpages
 business_websites = {
-    "Business A": {
-        "workstation": "https://google.com",
-        "server": "Business A Server"
+    "Laval Tool": {
+        "workstation": "https://api.paretosupport.com/clients/d8e47500-b39c-4e1f-b62b-d265f0af13ef/deploy/",
+        "server": "https://api.paretosupport.com/clients/42fcf95e-37b3-40ae-81b4-8d75fbcae718/deploy/"
     },
     "Business B": {
         "workstation": "Business B Workstation",
