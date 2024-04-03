@@ -37,9 +37,6 @@ def create_styled_button(url, filename):
                     font-size: 16px;
                     border-radius: 5px;
                 }
-                a:hover {
-  text-decoration: none;
-}
             </style>
         """
         href = f'<a href="{url}" download="{filename}" class="download-button">Download {filename}</a>'
