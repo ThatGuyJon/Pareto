@@ -1,51 +1,30 @@
 import streamlit as st
 
-# Create a dictionary of business names and their corresponding URLs
-business_options_dict = {
-    "Business A": {
-        "Workstation": "https://example.com/businessA_workstation",
-        "Server": "https://example.com/businessA_server"
-    },
-    "Business B": {
-        "Workstation": "https://example.com/businessB_workstation",
-        "Server": "https://example.com/businessB_server"
-    },
-    # Add more business names and URLs as needed
+# Define a dictionary of business names and their corresponding webpages
+business_websites = {
+    "Business A": "[Business A Website](https://www.businessa.com)",
+    "Business B": "[Business B Website](https://www.businessb.com)",
+    "Business C": "[Business C Website](https://www.businessc.com)"
 }
 
-# Display the first dropdown menu for selecting a business
-selected_business = st.selectbox("Select a business", list(business_options_dict.keys()))
+# Define a dictionary of workstation and server options
+options = {
+    "Workstation": "workstation",
+    "Server": "server"
+}
 
-# Display the second dropdown menu for selecting workstation or server
-selected_option = st.selectbox("Select an option", ["Workstation", "Server"])
+# Create a Streamlit app
+st.title("Business Webpage Selector")
 
-# Define a function to create the styled download button
-def create_styled_button(url):
-    with st.spinner("Generating download link..."):
-        # You can customize the button style using CSS
-        button_style = """
-            <style>
-                .open-button {
-                    background-color: #f0f2f6;
-                    border: none;
-                    color: white;
-                    padding: 10px 20px;
-                    text-align: center;
-                    text-decoration: none;
-                    display: inline-block;
-                    font-size: 16px;
-                    border-radius: 5px;
-                }
-            </style>
-        """
-        href = f'<a href="{url}" target="_blank" class="open-button">Open {business_name}</a>'
-        return button_style + href
+# Dropdown for selecting a business name
+selected_business = st.selectbox("Select a business name:", list(business_websites.keys()))
 
-# Get the selected URL based on the chosen business and option
-selected_url = business_options_dict.get(selected_business, {}).get(selected_option, "")
+# Dropdown for selecting workstation or server
+selected_option = st.selectbox("Select workstation or server:", list(options.keys()))
 
-# Display the link to the selected webpage
-if selected_url:
-    st.markdown(create_styled_button(selected_url,f"Open page"))
-else:
-    st.warning("Please select a business and an option from the dropdowns.")
+# Button to open the selected webpage
+if st.button("Open Webpage"):
+    if selected_option == "workstation":
+        st.write(f"Opening {selected_business} workstation webpage: {business_websites[selected_business]}")
+    elif selected_option == "server":
+        st.write(f"Opening {selected_business} server webpage: {business_websites[selected_business]}")
