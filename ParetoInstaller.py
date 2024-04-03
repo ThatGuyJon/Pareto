@@ -31,7 +31,7 @@ selected_business = st.selectbox("Select a business name:", list(business_websit
 # Dropdown for selecting workstation or server
 selected_option = st.selectbox("Select workstation or server:", list(options.keys()))
 
-
 # Button to open the selected webpage
-st.write("check out this [link](%s)" % url)
-st.markdown("check out this [link](%s)" % url)
+if st.button("Open Webpage"):
+    selected_url = business_websites[selected_business][selected_option]
+    st.write(f"Opening {selected_business} {selected_option} webpage: {selected_url}", unsafe_allow_html=True)
