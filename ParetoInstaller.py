@@ -46,6 +46,6 @@ selected_url = business_options_dict.get(selected_business, {}).get(selected_opt
 
 # Display the link to the selected webpage
 if selected_url:
-    st.markdown(f"Visit the {selected_option} page for {selected_business}: {selected_option} Webpage")
+    st.markdown(create_styled_button(selected_url,f"Open page")
 else:
     st.warning("Please select a business and an option from the dropdowns.")
