@@ -3,16 +3,16 @@ import streamlit as st
 # Define a dictionary of business names and their corresponding webpages
 business_websites = {
     "Business A": {
-        "workstation": "[Business A Workstation](https://www.businessa-workstation.com)",
-        "server": "[Business A Server](https://www.businessa-server.com)"
+        "workstation": "Business A Workstation",
+        "server": "Business A Server"
     },
     "Business B": {
-        "workstation": "[Business B Workstation](https://www.businessb-workstation.com)",
-        "server": "[Business B Server](https://www.businessb-server.com)"
+        "workstation": "Business B Workstation",
+        "server": "Business B Server"
     },
     "Business C": {
-        "workstation": "[Business C Workstation](https://www.businessc-workstation.com)",
-        "server": "[Business C Server](https://www.businessc-server.com)"
+        "workstation": "Business C Workstation",
+        "server": "Business C Server"
     }
 }
 
@@ -32,5 +32,6 @@ selected_business = st.selectbox("Select a business name:", list(business_websit
 selected_option = st.selectbox("Select workstation or server:", list(options.keys()))
 
 # Button to open the selected webpage
-if st.link_button("Open Webpage", "selected_url"):
-    selected_url = business_websites[selected_business][selected_option]
+if st.button("Open Webpage"):
+    selected_url = business_websites[selected_business][options[selected_option]]
+    st.link_button(f"Open {selected_business} {selected_option} webpage", selected_url)
