@@ -3,16 +3,16 @@ import streamlit as st
 # Define a dictionary of business names and their corresponding webpages
 business_websites = {
     "Business A": {
-        "workstation": "https://www.businessa-workstation.com",
-        "server": "https://www.businessa-server.com"
+        "workstation": "https://google.com",
+        "server": "https://www.google.com"
     },
     "Business B": {
-        "workstation": "https://www.businessb-workstation.com",
-        "server": "https://www.businessb-server.com"
+        "workstation": "https://www.google.com",
+        "server": "https://www.google.com"
     },
     "Business C": {
-        "workstation": "https://www.businessc-workstation.com",
-        "server": "https://www.businessc-server.com"
+        "workstation": "https://www.google.com",
+        "server": "https://www.google.com"
     }
 }
 
