@@ -228,26 +228,26 @@
     });
 
     fileInput.addEventListener('change', (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                try {
-                    const importedItems = JSON.parse(e.target.result);
-                    if (Array.isArray(importedItems)) {
-                        items = importedItems; // Replace current items with imported items
-                        localStorage.setItem('items', JSON.stringify(items));
-                        renderItems();
-                    } else {
-                        alert('Invalid JSON format. Please upload a valid JSON file.');
-                    }
-                } catch (error) {
-                    alert('Error parsing JSON: ' + error.message);
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const importedData = JSON.parse(e.target.result);
+                if (importedData && Array.isArray(importedData.items)) {
+                    items = importedData.items; // Replace current items with imported items
+                    localStorage.setItem('items', JSON.stringify(items));
+                    renderItems();
+                } else {
+                    alert('Invalid JSON format. Please upload a valid JSON file.');
                 }
-            };
-            reader.readAsText(file);
-        }
-    });
+            } catch (error) {
+                alert('Error parsing JSON: ' + error.message);
+            }
+        };
+        reader.readAsText(file);
+    }
+});
 
     // Function to handle export of JSON data
     exportButton.addEventListener('click', () => {
