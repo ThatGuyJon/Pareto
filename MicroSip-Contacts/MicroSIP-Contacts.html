@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MicroSIP Directory Editor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        input, button, select {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>MicroSIP Directory Editor</h1>
+
+<form id="itemForm">
+    <input type="hidden" id="itemIndex" value="-1">
+    <input type="text" id="number" placeholder="Number" required>
+    <input type="text" id="name" placeholder="Name" required>
+    <input type="text" id="firstname" placeholder="First Name" required>
+    <input type="text" id="lastname" placeholder="Last Name" required>
+    <input type="text" id="phone" placeholder="Phone">
+    <input type="text" id="mobile" placeholder="Mobile">
+    <input type="email" id="email" placeholder="Email">
+    <input type="text" id="address" placeholder="Address">
+    <input type="text" id="city" placeholder="City">
+    <input type="text" id="state" placeholder="State">
+    <input type="text" id="zip" placeholder="Zip">
+    <textarea id="comment" placeholder="Comment"></textarea>
+    
+    <!-- Presence Checkbox -->
+    <label for="presence">Presence:</label>
+    <input type="checkbox" id="presence" value="1">
+    
+    <!-- Starred Checkbox -->
+    <label for="starred">Starred:</label>
+    <input type="checkbox" id="starred" value="1">
+    
+    <button type="submit">Add/Update Item</button>
+</form>
+
+<button id="importButton">Import JSON</button>
+<input type="file" id="fileInput" style="display: none;">
+<button id="exportButton">Export JSON</button>
+
+<!-- Sorting Options -->
+<label for="sortCriteria">Sort by:</label>
+<select id="sortCriteria">
+    <option value="name">Name</option>
+    <option value="firstname">First Name</option>
+    <option value="lastname">Last Name</option>
+    <option value="number">Number</option>
+</select>
+
+<label for="sortOrder">Order:</label>
+<select id="sortOrder">
+    <option value="asc">Ascending</option>
+    <option value="desc">Descending</option>
+</select>
+
+<button id="sortButton">Sort</button>
+
+<table id="itemTable">
+    <thead>
+        <tr>
+            <th>Number</th>
+            <th>Name</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Phone</th>
+            <th>Mobile</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip</th>
+            <th>Comment</ ```html
+            <th>Presence</th>
+            <th>Starred</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<script>
+    const itemForm = document.getElementById('itemForm');
+    const itemTable = document.getElementById('itemTable').getElementsByTagName('tbody')[0];
+    const sortButton = document.getElementById('sortButton');
+    const importButton = document.getElementById('importButton');
+    const fileInput = document.getElementById('fileInput');
+    const exportButton = document.getElementById('exportButton');
+    const sortCriteria = document.getElementById('sortCriteria');
+    const sortOrder = document.getElementById('sortOrder');
+
+    // Initialize items from localStorage
+    let items = JSON.parse(localStorage.getItem('items'));
+    if (!Array.isArray(items)) {
+        items = []; // Reset to an empty array if the stored data is not valid
+    }
+
+    // Function to render items in the table
+    function renderItems() {
+        itemTable.innerHTML = ''; // Clear the table
+        items.forEach((item, index) => {
+            const row = itemTable.insertRow();
+            row.insertCell(0).innerText = item.number;
+            row.insertCell(1).innerText = item.name;
+            row.insertCell(2).innerText = item.firstname;
+            row.insertCell(3).innerText = item.lastname;
+            row.insertCell(4).innerText = item.phone;
+            row.insertCell(5).innerText = item.mobile;
+            row.insertCell(6).innerText = item.email;
+            row.insertCell(7).innerText = item.address;
+            row.insertCell(8).innerText = item.city;
+            row.insertCell(9).innerText = item.state;
+            row.insertCell(10).innerText = item.zip;
+            row.insertCell(11).innerText = item.comment;
+            row.insertCell(12).innerText = item.presence;
+            row.insertCell(13).innerText = item.starred;
+            const actionsCell = row.insertCell(14);
+            const editButton = document.createElement('button');
+            editButton.innerText = 'Edit';
+            editButton.onclick = () => editItem(index);
+            actionsCell.appendChild(editButton);
+            const cloneButton = document.createElement('button');
+            cloneButton.innerText = 'Clone';
+            cloneButton.onclick = () => cloneItem(index);
+            actionsCell.appendChild(cloneButton);
+            const deleteButton = document.createElement('button');
+            deleteButton.innerText = 'Delete';
+            deleteButton.onclick = () => deleteItem(index);
+            actionsCell.appendChild(deleteButton);
+        });
+    }
+
+    // Function to handle form submission
+    itemForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const presence = document.getElementById('presence').checked ? 1 : 0;
+        const starred = document.getElementById('starred').checked ? 1 : 0;
+        const newItem = {
+            number: document.getElementById('number').value,
+            name: document.getElementById('name').value,
+            firstname: document.getElementById('firstname').value,
+            lastname: document.getElementById('lastname').value,
+            phone: document.getElementById('phone').value,
+            mobile: document.getElementById('mobile').value,
+            email: document.getElementById('email').value,
+            address: document.getElementById('address').value,
+            city: document.getElementById('city').value,
+            state: document.getElementById('state').value,
+            zip: document.getElementById('zip').value,
+            comment: document.getElementById('comment').value,
+            presence: presence,
+            starred: starred
+        };
+        const itemIndex = document.getElementById('itemIndex').value;
+        if (itemIndex === '-1') {
+            items.push(newItem); // Add new item
+        } else {
+            items[itemIndex] = newItem; // Update existing item
+        }
+        localStorage.setItem('items', JSON.stringify(items));
+        renderItems();
+        itemForm.reset();
+        document.getElementById('itemIndex').value = '-1'; // Reset index
+    });
+
+    // Function to edit an item
+    function editItem(index) {
+        const item = items[index];
+        document.getElementById('number').value = item.number;
+        document.getElementById('name').value = item.name;
+        document.getElementById('firstname').value = item.firstname;
+        document.getElementById('lastname'). value = item.lastname;
+        document.getElementById('phone').value = item.phone;
+        document.getElementById('mobile').value = item.mobile;
+        document.getElementById('email').value = item.email;
+        document.getElementById('address').value = item.address;
+        document.getElementById('city').value = item.city;
+        document.getElementById('state').value = item.state;
+        document.getElementById('zip').value = item.zip;
+        document.getElementById('comment').value = item.comment;
+        document.getElementById('presence').checked = item.presence === 1;
+        document.getElementById('starred').checked = item.starred === 1;
+        document.getElementById('itemIndex').value = index; // Set index for editing
+    }
+
+    // Function to clone an item
+    function cloneItem(index) {
+        const item = items[index];
+        const clonedItem = { ...item }; // Create a shallow copy of the item
+        clonedItem.number = `${item.number} (Clone)`; // Modify the number to indicate it's a clone
+        items.push(clonedItem); // Add the cloned item to the list
+        localStorage.setItem('items', JSON.stringify(items));
+        renderItems(); // Re-render the table to show the new item
+    }
+
+    // Function to delete an item
+    function deleteItem(index) {
+        items.splice(index, 1); // Remove item from array
+        localStorage.setItem('items', JSON.stringify(items));
+        renderItems();
+    }
+
+    // Function to handle import of JSON data
+    importButton.addEventListener('click', () => {
+        fileInput.click(); // Trigger file input click
+    });
+
+    fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const importedItems = JSON.parse(e.target.result);
+                    if (Array.isArray(importedItems)) {
+                        items = importedItems; // Replace current items with imported items
+                        localStorage.setItem('items', JSON.stringify(items));
+                        renderItems();
+                    } else {
+                        alert('Invalid JSON format. Please upload a valid JSON file.');
+                    }
+                } catch (error) {
+                    alert('Error parsing JSON: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+    });
+
+    // Function to handle export of JSON data
+    exportButton.addEventListener('click', () => {
+        const exportData = {
+            refresh: 0,
+            items: items // Wrap items in an object with a refresh key
+        };
+        const dataStr = JSON.stringify(exportData, null, 2); // Convert to JSON string
+        const blob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'MicroSIP-Contacts.json'; // Set the file name for download
+        document.body.appendChild(a);
+        a.click(); // Trigger download
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url); // Clean up the URL object
+    });
+
+    // Function to handle sorting
+    sortButton.addEventListener('click', () => {
+        const criteria = sortCriteria.value;
+        const order = sortOrder.value;
+        items.sort((a, b) => {
+            if (a[criteria] < b[criteria]) return order === 'asc' ? -1 : 1;
+            if (a[criteria] > b[criteria]) return order === 'asc' ? 1 : -1;
+            return 0;
+        });
+        localStorage.setItem('items', JSON.stringify(items));
+        renderItems(); // Re-render the table after sorting
+    });
+
+    // Initial render
+    renderItems();
+</script>
+
+</body>
+</html>
